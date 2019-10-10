@@ -1,0 +1,65 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Homework 1: Lateral Inhibition} % Title of the assignment
+
+\author{Oliver Rutving s164209} % Author name and email address
+
+\date{Introduction to Cognitive Science 02454 --- \today} % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Lateral Inhibition} % Numbered section
+Let $x_1, x_2, x_3$ represent how many deciliters of each product A, B or C should be produced. 
+\\
+She can sell product A for 60kr per liter, product B for 70kr per liter and product C for 30kr per liter. This gives the objective function $Z=6x_1+7x_2+3x_3$. 
+The objective function says that for every dl of product A sold she will profit 6kr. If she sells 2dl of each product, she will earn $Z=6*2+7*2+3*2=32$
+\\
+Since the DTU student has 7 liters of Ethanol and product A uses 1dl, product B 2dl and product C 1dl, we have the constraint: $x_1+2x_2+x_3\leq 70$
+\\
+She has 21 liters of apple juice. Product A uses 2dl, product B uses 2dl and product C uses 3dl, which gives the constraint $2x_1+2x_2+3x_3\leq 210$
+\\
+Lastly, she has 20 liters of Coca-Cola. Product A uses 3dl, product B uses 1dl and product C uses 1dl, which gives the constraint $3x_1+x_2+x3\leq 200$
+\\
+The constraints and objective function gives the following LP:
+\\
+\begin{equation*}
+    \begin{array}{ll@{}ll}
+    \text{Maximize}  & Z=6x_1+7x_2+3x_3 &\\
+    \text{Subject to}& x_1+2x_2+x_3\leq 70\\
+                     & 2x_1+2x_2+3x_3\leq 210\\
+                     & 3x_1+x_2+x_3\leq 200\\
+                     & x_1, x_2, x_3 \geq 0
+\end{array}
+\end{equation*}
+
+It is informed that for the optimal solution, she only makes product A and product B and that she does not use up all the apple juice.
+There are 3 constraints and so there must be 3 basic variables.
+Based on this information, it can be concluded that $x_1, x_2$ (product A and B) as well as the slack variable for the second constraint (apple juice) are basic variables. 
+This is because $x_1$ and $x_2$ are non-zero in the solution and that the apple juice was not used up (the slack variable is non-zero)
+
+
+
+
+
+\hrulefill 
+end of the assignment
+\end{document}
