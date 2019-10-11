@@ -27,7 +27,7 @@
 %	PROBLEM 1
 %----------------------------------------------------------------------------------------
 
-\section{Lateral Inhibition} % Numbered section
+\section{Exercise 1} % Numbered section
 Let $x_1, x_2, x_3$ represent how many deciliters of each product A, B or C should be produced. 
 \\
 She can sell product A for 60kr per liter, product B for 70kr per liter and product C for 30kr per liter. This gives the objective function $Z=6x_1+7x_2+3x_3$. 
@@ -50,11 +50,74 @@ The constraints and objective function gives the following LP:
                      & x_1, x_2, x_3 \geq 0
 \end{array}
 \end{equation*}
-
+\\
 It is informed that for the optimal solution, she only makes product A and product B and that she does not use up all the apple juice.
 There are 3 constraints and so there must be 3 basic variables.
 Based on this information, it can be concluded that $x_1, x_2$ (product A and B) as well as the slack variable for the second constraint (apple juice) are basic variables. 
-This is because $x_1$ and $x_2$ are non-zero in the solution and that the apple juice was not used up (the slack variable is non-zero)
+This is because $x_1$ and $x_2$ are non-zero in the solution and because the apple juice was not used up (the slack variable is also non-zero)
+
+\vspace{5mm}
+Initial system of equations:
+
+\vspace{5mm}
+\begin{tabular}{|l|l|l|l l l l l l|l|}
+  \hline
+  B.V           & Eq. & Z & x1 & x2 & x3 & x4 & x5 & x6 & RHS \\ \hline
+  Z             & (0) & 1 & -6 & -7 & -3 & 0  & 0  & 0  & 0   \\ \hline
+  x4            & (1) & 0 & 1  & 2  & 1  & 1  & 0  & 0  & 70  \\ \hline
+  x5            & (2) & 0 & 2  & 2  & 3  & 0  & 1  & 0  & 210 \\ \hline
+  x6            & (3) & 0 & 3  & 1  & 1  & 0  & 0  & 1  & 200 \\ \hline
+\end{tabular}
+\vspace{5mm}
+\\
+Using the fundamental insight described above, it is possible to write up the final tabeau. 
+The basic variables are $x_1, x_2$ and $x_5$ and so:
+\[c_B=[6, 7, 0] \ \ \ \ \ B=
+\begin{bmatrix}
+  1 & 2 & 0 \\
+  2 & 2 & 1 \\
+  3 & 1 & 0
+\end{bmatrix}
+\]
+
+\pagebreak
+The values are calculated in Julia like so:
+
+\vspace{5mm}
+\begin{file}[Project 1.jl]
+	\begin{lstlisting}[language=matlab]
+A=[1 2 1; 2 2 3; 3 1 1]
+I=[1 0 0; 0 1 0; 0 0 1]
+B=[1 2 0; 2 2 1; 3 1 0]
+b=[70; 210; 200]
+c=transpose([6,7,3])
+cB=transpose([6,7,0])
+   
+cB*inv(B)*A-c
+inv(B)*A
+cB*inv(B)
+inv(B)
+cB*inv(B)*b
+inv(B)*b    
+	\end{lstlisting}
+\end{file}
+
+
+\vspace{5mm}
+The optimal tableau becomes:
+
+\vspace{5mm}
+\begin{tabular}{|l|l|l|l l l l l l|l|}
+  \hline
+  B.V           & Eq. & Z & x1 & x2 & x3 & x4 & x5 & x6 & RHS \\ \hline
+  Z             & (0) & 1 & 0 & 0 & 1 & 3 & 0 & 1 & 0   \\ \hline
+  x1            & (1) & 0 & 1 & 0 & 0.2 & -0.2 & 0 & 0.4 & 66  \\ \hline
+  x2            & (2) & 0 & 0 & 1 & 0.4 & 0.6 & 0 & -0.2 & 2 \\ \hline
+  x5            & (3) & 0 & 0 & 0 & 1.8 & -0.8 & 1 & -0.4 & 74 \\ \hline
+\end{tabular}
+
+
+\section{Exercise 2} % Numbered section
 
 
 
