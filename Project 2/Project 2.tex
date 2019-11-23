@@ -1,0 +1,224 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Homework 2: Integer Programming} % Title of the assignment
+
+\author{Oliver Rutving s164209} % Author name and email address
+
+\date{Introduction to Linear Programming  --- \today} % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Question 1}
+\subsection{Exercise 1}
+Let $x_1, ..., x_7$ represent how many lots (in $m^3$) should be shipped to client 1-7 respectively. 
+Lots cannot be divided. The integer linear program is formulated as so:
+
+\begin{equation*}
+  \begin{array}{ll@{}ll}
+  \text{Maximize}  & Z=920*x_1+530*x_2+515*x_3+720*x_4+1127*x_5+730*x_6+1020*x_7\\
+                   & \\
+  \text{Subject to}& 10*x_1+8*x_2+6*x_3+9*x_4+15*x_5+10*x_6+12*x_7 \leq 1500\\
+                   & x_1\leq 12 \\
+                   & x_2\leq 31 \\
+                   & x_3\leq 20 \\
+                   & x_4\leq 25 \\
+                   & x_5\leq 50 \\
+                   & x_6\leq 40 \\
+                   & x_7\leq 60 \\
+                   & x_i\in \mathbb{Z_+}\ |\ i=1,...,7
+  \end{array}
+\end{equation*}
+
+
+\subsection{Exercise 2}
+The integer program is implemented in Julia which returns the following:
+
+% Command-line "screenshot"
+\begin{commandline}
+\begin{verbatim}
+Objective value: 124207.00000000001
+x1 = 12.0
+x2 = 0.0
+x3 = 20.0
+x4 = 25.0
+x5 = 21.0
+x6 = 0.0
+x7 = 60.0
+	\end{verbatim}
+\end{commandline}
+
+
+\subsection{Exercise 3}
+To meet with the new regulations, a new constraint is added for each variable that forces all variables to be bigger than half of their respective requested number of lots.
+The change is implemented in Julia and returns the following:
+
+% Command-line "screenshot"
+\begin{commandline}
+  \begin{verbatim}
+Objective value: 119280.0
+x1 = 11.0
+x2 = 16.0
+x3 = 19.0
+x4 = 13.0
+x5 = 25.0
+x6 = 20.0
+x7 = 38.0
+    \end{verbatim}
+  \end{commandline}
+
+It is observed that the objective value is now smaller compared to before the change.
+
+\subsection{Exercise 4}
+
+There is now a start up cost when loading lots at a client. 
+This change requires a binary variable indicating whether a client is used or not.
+Implementing the new requirement changes the linear integer model to the following:
+
+\begin{equation*}
+  \begin{array}{ll@{}ll}
+  \text{Maximize}  & Z=920*x_1+530*x_2+515*x_3+720*x_4+1127*x_5+730*x_6+1020*x_7-300*y_1\\
+                   & \ \ \ \ \ \ \ \ -160*y_2-240*y_3-400*y_4-600*y_5-250*y_6-280*y_7 \\
+                   & \\
+  \text{Subject to}& 10*x_1+8*x_2+6*x_3+9*x_4+15*x_5+10*x_6+12*x_7 \leq 1500\\
+                   & x_1\leq 12*y_1 \\
+                   & x_2\leq 31*y_2 \\
+                   & x_3\leq 20*y_3 \\
+                   & x_4\leq 25*y_4 \\
+                   & x_5\leq 50*y_5 \\
+                   & x_6\leq 40*y_6 \\
+                   & x_7\leq 60*y_7 \\
+                   & x_i\in \mathbb{Z_+}\ |\ i=1,...,7
+                   & y_i\in {0,1}\ |\ i=1,...,7
+  \end{array}
+\end{equation*}
+
+
+\begin{commandline}
+  \begin{verbatim}
+Objective value: 122387.0
+x1 = 12.0
+x2 = 0.0
+x3 = 20.0
+x4 = 25.0
+x5 = 21.0
+x6 = 0.0
+x7 = 60.0
+y = 1-dimensional DenseAxisArray{Float64,1,...} with index sets:
+    Dimension 1, 0:6
+And data, a 7-element Array{Float64,1}:      
+  1.0
+  0.0
+  1.0
+  1.0
+  1.0
+  0.0
+  1.0
+    \end{verbatim}
+  \end{commandline}
+
+The objective value has decreased. Client 2 and 6 are not used.
+
+\section{Question 2}
+\subsection{Exercise 1}
+
+The problem is set up in Julia which returns the following:
+
+\begin{commandline}
+  \begin{verbatim}
+    Objective Value: 7.0
+    ...
+    And data, a 15-element Array{Float64,1}:     
+     1.0
+     0.0
+     0.0
+     0.0
+     1.0
+     1.0
+     0.0
+     1.0
+     0.0
+     0.0
+     1.0
+     0.0
+     1.0
+     1.0
+     0.0
+    \end{verbatim}
+  \end{commandline}
+
+And so meeting request 1, 5, 6, 8, 11, 13, 14 is one combination of bookings to make sure the maximum number of meeting requests are fulfilled.
+The maximum number of meeting requests is therefore 7.
+
+\subsection{Exercise 2}
+The change has been implemented in Julia, but it does not compute.
+
+\subsection{Exercise 3}
+
+\subsection{Exercise 4}
+
+\subsection{Exercise 5}
+
+\section{Question 3}
+
+\subsection{Exercise 1}
+
+Decision variables:
+
+$x_{ij}=$ \{
+
+1 if arc (i,j) is used in the solution
+
+0 otherwise
+
+\}
+
+$u_i\geq 0, the position of node i in the solution$
+
+
+\begin{equation*}
+  \begin{array}{ll@{}ll}
+  \text{Minimize}  & \sum_{i = 1}^{n}\sum_{j = 1}^{n} c_{ij}x_{ij}  &  \\
+                   & \\
+  \text{Subject to}& \sum_{p = 1}^{m} x_{1p}=1 & \\
+                   & \sum_{b = 1}^{m*2} x_{pb}=1 & \forall p \\
+                   & \sum_{b = 1}^{m*2}\sum{d = 1}^{m} x_{db}=m-1 & \\
+                   & u_i-u_j+1<=(n-1)*(1-x_{ij}) & \forall i \neq 1, \forall j \neq 1\\
+                   & u_1=1 & \\
+                   & 2\leq u_i \leq m & \forall i=1,... , m
+  \end{array}
+\end{equation*}
+
+Here, $d$ denotes all delivery points, $p$ denotes all pickup points and $b$ denotes both all delivery points and pickup points. 
+
+In the first constraint we make sure that the office is connected to one of the pickup places.
+In the second constraint we make sure that all pickup location is connected to either another pickup location or a delivery location.
+The third constraint makes sure that all delivery points (except one being the end point) are connected with either a pickup point or another delivery point.
+The fourth through sixth constraint makes sure that a path is made 
+
+\subsection{Exercise 2}
+\subsection{Exercise 3}
+\subsection{Exercise 4}
+\subsection{Exercise 5}
+
+
+end of the assignment
+\end{document}
