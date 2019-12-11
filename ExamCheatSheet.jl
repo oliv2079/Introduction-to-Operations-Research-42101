@@ -63,6 +63,54 @@ S*delta
 
 
 
+
+#Simplex Metoden /simplex method
+
+R0=transpose([1, -6, -8, -6, 0, 0, 0, 0])
+R1=transpose([0,1,2,1,1,0,0,16])
+R2=transpose([0,2,1,2,0,1,0,9])
+R3=transpose([0,2,1,1,0,0,1,11])
+
+R1n=R1/2
+R0n=R0+R1n*8
+R2n=R2-R1n
+R3n=R3-R1n
+
+R1n=R1
+R3n=R3-4*R2n
+
+R0n
+R1n
+R2n
+R3n
+
+#Assignment problem
+
+using JuMP
+using GLPK
+
+m = Model(with_optimizer(GLPK.Optimizer))
+
+cost = [5 13 1 6;
+        7 12 6 17;
+        14 10 19 3;
+        3 14 1 2]
+
+n=4
+
+@variable(m, x[1:n,1:n], Bin)
+@objective(m, Min, sum(cost[i,j]*x[i,j] for i=1:n for j=1:n))
+@constraint(m, [i=1:n], sum(x[i,j] for j=1:n) == 1)
+@constraint(m, [j=1:n], sum(x[i,j] for i=1:n) == 1)
+
+optimize!(m)
+
+println("Objective Value: ", JuMP.objective_value(m))
+println("Variable values ", JuMP.value.(x))
+
+
+#APPENDIX-------------------------------------------------------
+
 #Calculate new values 
 inv(B)*A #A
 inv(B) #I
@@ -83,35 +131,3 @@ cB*inv(B)*A-c #c
 
 cB*inv(B) #z
 cB*inv(B)*b #res
-
-
-
-
-
-
-
-#Simplex Metoden /simplex method
-
-R0=transpose([1, -6, -8, -6, 0, 0, 0, 0])
-R1=transpose([0,1,2,1,1,0,0,16])
-R2=transpose([0,2,1,2,0,1,0,9])
-R3=transpose([0,2,1,1,0,0,1,11])
-
-
-R1n=R1/2
-R0n=R0+R1n*8
-R2n=R2-R1n
-R3n=R3-R1n
-
-
-
-R1n=R1
-R3n=R3-4*R2n
-
-R0n
-R1n
-R2n
-R3n
-
-#Følsomhedsanalyse / Sensitivity analysis
-
